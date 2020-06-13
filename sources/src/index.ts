@@ -8,7 +8,8 @@ export async function main(options: ApplicationConfig = {}) {
     await app.boot();
     await app.start();
 
-    console.log(`Application is running`);
+    const url = app.restServer.url;
+    console.log(`Server is running at ${url}`);
 
     return app;
 }

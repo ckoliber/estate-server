@@ -20,7 +20,7 @@ import {
     RestExplorerComponent,
 } from "@loopback/rest-explorer";
 
-import { CRUDStrategy, BearerService, AuthorizerProvider } from "~/providers";
+import { BearerStrategy, BearerService, AuthorizerProvider } from "~/providers";
 import { EstateBindings } from "~/keys";
 import { Sequence } from "~/sequence";
 
@@ -56,7 +56,7 @@ export class EstateApplication extends BootMixin(
     }
 
     private bindAuthentication() {
-        registerAuthenticationStrategy(this, CRUDStrategy);
+        registerAuthenticationStrategy(this, BearerStrategy);
 
         this.bind(EstateBindings.TOKEN_SERVICE).toClass(BearerService);
 

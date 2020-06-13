@@ -4,8 +4,8 @@ import { AuthenticationStrategy, TokenService } from "@loopback/authentication";
 
 import { EstateBindings } from "~/keys";
 
-export class CRUDStrategy implements AuthenticationStrategy {
-    name: string = "crud";
+export class BearerStrategy implements AuthenticationStrategy {
+    name: string = "bearer";
 
     constructor(
         @inject(EstateBindings.TOKEN_SERVICE)
