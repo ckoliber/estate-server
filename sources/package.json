@@ -1,0 +1,73 @@
+{
+    "name": "estate-server",
+    "private": true,
+    "version": "0.1.0",
+    "description": "Estate Server Application",
+    "keywords": [
+        "loopback-application",
+        "loopback"
+    ],
+    "main": "index.js",
+    "engines": {
+        "node": ">=10"
+    },
+    "scripts": {
+        "clean": "lb-clean dist *.tsbuildinfo",
+        "prebuild": "npm run clean",
+        "build": "lb-tsc --outDir dist",
+        "build:watch": "lb-tsc --watch --outDir dist",
+        "start": "node .",
+        "start:watch": "nodemon .",
+        "migrate": "node . --migrate",
+        "test": "lb-mocha --allow-console-logs \"test/**/*.test.ts\"",
+        "prepublishOnly": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ckoliber/estate-server"
+    },
+    "author": "KoLiBer",
+    "license": "MIT",
+    "files": [
+        "README.md",
+        "index.js",
+        "index.d.ts",
+        "dist"
+    ],
+    "dependencies": {
+        "@loopback/authentication": "^4.2.6",
+        "@loopback/authorization": "^0.5.11",
+        "@loopback/boot": "^2.3.2",
+        "@loopback/context": "^3.8.2",
+        "@loopback/core": "^2.7.1",
+        "@loopback/repository": "^2.6.0",
+        "@loopback/rest": "^5.1.0",
+        "@loopback/security": "^0.2.11",
+        "@loopback/service-proxy": "^2.3.1",
+        "axios": "^0.19.2",
+        "better-module-alias": "^1.0.4",
+        "dotenv-safe": "^6.1.0",
+        "jalali-moment": "^3.3.4",
+        "loopback-component-cascade": "^0.1.0",
+        "loopback-component-crud": "^0.10.0",
+        "loopback-component-filter": "^0.4.0",
+        "loopback-component-history": "^0.7.0",
+        "loopback-component-storage": "^3.7.0",
+        "loopback-connector-mysql": "^5.4.2",
+        "loopback-connector-rest": "^3.6.0",
+        "loopback-connector-soap": "^5.1.0",
+        "persianjs": "^0.4.0",
+        "tslib": "^2.0.0"
+    },
+    "devDependencies": {
+        "@loopback/build": "^5.4.2",
+        "@loopback/testlab": "^3.1.6",
+        "@types/node": "^10.17.24",
+        "nodemon": "^2.0.4",
+        "ts-node": "^8.10.2",
+        "typescript": "~3.9.3"
+    },
+    "_moduleAliases": {
+        "~": "./dist"
+    }
+}
