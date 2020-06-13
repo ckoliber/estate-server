@@ -4,7 +4,12 @@ import { Request, Response, RestBindings } from "@loopback/rest";
 import { SecurityBindings, UserProfile } from "@loopback/security";
 import { CRUDController } from "loopback-component-crud";
 
-// import {} from "~/repositories";
+import {
+    EstateRepository,
+    FieldRepository,
+    PropertyRepository,
+    SchemaRepository,
+} from "~/repositories";
 
 export class Controller extends CRUDController {
     constructor(
@@ -13,14 +18,17 @@ export class Controller extends CRUDController {
         @inject(RestBindings.Http.RESPONSE)
         public response: Response,
         @inject(SecurityBindings.USER, { optional: true })
-        public session: UserProfile // @repository(AgreementRepository) // public agreementRepository: AgreementRepository,
-    ) // @repository(PriorityRepository)
-    // public priorityRepository: PriorityRepository,
-    // @repository(PlanRepository)
-    // public planRepository: PlanRepository,
-    // @repository(PlanTypeRepository)
-    // public planTypeRepository: PlanTypeRepository,
-    {
+        public session: UserProfile,
+
+        @repository(EstateRepository)
+        public estateRepository: EstateRepository,
+        @repository(FieldRepository)
+        public fieldRepository: FieldRepository,
+        @repository(PropertyRepository)
+        public propertyRepository: PropertyRepository,
+        @repository(SchemaRepository)
+        public schemaRepository: SchemaRepository
+    ) {
         super(request, response, session);
     }
 }

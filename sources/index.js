@@ -23,8 +23,7 @@ if (require.main === module) {
             rest: {
                 host: process.env.HTTP_LOCAL_HOST,
                 port: parseInt(process.env.HTTP_REST_PORT),
-                basePath: basePath,
-                homePath: __dirname + "/public",
+                basePath: "/",
                 gracePeriodForClose: 5000,
                 apiExplorer: {
                     disabled: debug ? undefined : true,
