@@ -1,5 +1,5 @@
 import { Client } from "@loopback/testlab";
-import { EstateApplication } from "../../src";
+import { EstateApplication } from "../src";
 import { setupApplication } from "./test-helper";
 
 describe("HomePage", () => {

@@ -1,4 +1,4 @@
-import { EstateApplication } from "../../src";
+import { EstateApplication } from "../src";
 import {
     createRestAppClient,
     givenHttpServerConfig,
