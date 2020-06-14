@@ -1,22 +1,16 @@
-import { inject } from "@loopback/context";
 import { HttpErrors, Request } from "@loopback/rest";
-import { AuthenticationStrategy, TokenService } from "@loopback/authentication";
+import { AuthenticationStrategy } from "@loopback/authentication";
+import { UserProfile } from "@loopback/security";
 
-import { EstateBindings } from "~/keys";
+export class Auth0Strategy implements AuthenticationStrategy {
+    name: string = "auth0";
 
-export class BearerStrategy implements AuthenticationStrategy {
-    name: string = "bearer";
+    async authenticate(request: Request): Promise<UserProfile> {
+        const token = this.extractCredentials(request);
 
-    constructor(
-        @inject(EstateBindings.TOKEN_SERVICE)
-        public tokenService: TokenService
-    ) {}
-
-    async authenticate(request: Request) {
-        const token: string = this.extractCredentials(request);
-
-        return await this.tokenService.verifyToken(token);
+        return {} as any;
     }
+
     private extractCredentials(request: Request) {
         if (request.headers.authorization) {
             // for example: Bearer xyz
