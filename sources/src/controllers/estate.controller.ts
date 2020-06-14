@@ -3,8 +3,6 @@ import { CRUDControllerMixin } from "loopback-component-crud";
 import { Estate } from "~/models";
 import { Controller } from "~/controller";
 
-import { Permissions } from "~/permissions";
-
 export class EstatesController extends CRUDControllerMixin(
     Estate,
     Controller,

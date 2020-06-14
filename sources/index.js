@@ -16,14 +16,13 @@ module.exports = application;
 if (require.main === module) {
     if (process.argv.indexOf("--migrate") < 0) {
         // Run the application
-        const version = process.env.npm_package_version;
-        const basePath = `/api/${version}`;
         const debug = process.env.HTTP_DEBUG === "true";
+
         const config = {
             rest: {
                 host: process.env.HTTP_LOCAL_HOST,
                 port: parseInt(process.env.HTTP_REST_PORT),
-                basePath: "/",
+                basePath: `/api/${process.env.npm_package_version}`,
                 gracePeriodForClose: 5000,
                 apiExplorer: {
                     disabled: debug ? undefined : true,
@@ -35,10 +34,6 @@ if (require.main === module) {
                 cors: {
                     exposedHeaders: ["x-total-count"],
                 },
-            },
-            graphql: {
-                host: process.env.HTTP_LOCAL_HOST,
-                port: parseInt(process.env.HTTP_GQL_PORT),
             },
         };
 
