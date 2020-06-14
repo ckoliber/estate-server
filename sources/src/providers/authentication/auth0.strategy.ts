@@ -2,13 +2,56 @@ import { HttpErrors, Request } from "@loopback/rest";
 import { AuthenticationStrategy } from "@loopback/authentication";
 import { UserProfile } from "@loopback/security";
 
+import jwt from "jsonwebtoken";
+import jwksRsa from "jwks-rsa";
+
 export class Auth0Strategy implements AuthenticationStrategy {
     name: string = "auth0";
+
+    private jwksClient = jwksRsa({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: process.env.AUTH0_URI as string,
+    });
 
     async authenticate(request: Request): Promise<UserProfile> {
         const token = this.extractCredentials(request);
 
-        return {} as any;
+        return new Promise<UserProfile>((resolve, reject) =>
+            jwt.verify(
+                token,
+                (header, callback) => {
+                    console.log(header);
+                    return this.jwksClient.getSigningKey(
+                        header.kid || "",
+                        (err, key: any) => {
+                            console.log(key);
+                            return callback(
+                                err,
+                                key.publicKey || key.rsaPublicKey
+                            );
+                        }
+                    );
+                },
+                {
+                    issuer: process.env.AUTH0_ISSUER,
+                    audience: process.env.AUTH0_AUDIENCE,
+                    algorithms: ["RS256"],
+                },
+                (error, profile) => {
+                    if (!error) {
+                        resolve(profile as any);
+                    }
+
+                    reject(
+                        new HttpErrors.Unauthorized(
+                            `Authorization header is not valid, ${error}`
+                        )
+                    );
+                }
+            )
+        );
     }
 
     private extractCredentials(request: Request) {

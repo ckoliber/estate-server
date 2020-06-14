@@ -6,6 +6,8 @@ import {
     AuthorizationDecision,
 } from "@loopback/authorization";
 
+import { getAccess } from "loopback-component-crud";
+
 export class AuthorizerProvider implements Provider<Authorizer> {
     value(): Authorizer {
         return this.authorize.bind(this);
@@ -15,8 +17,10 @@ export class AuthorizerProvider implements Provider<Authorizer> {
         context: AuthorizationContext,
         metadata: AuthorizationMetadata
     ) {
+        const accessMetadata = getAccess(context.invocationContext) || metadata;
+
         if (
-            (metadata.scopes || []).reduce(
+            (accessMetadata.scopes || []).reduce(
                 (accumulate, item) =>
                     accumulate &&
                     (context.principals[0].permissions || []).indexOf(item) >=
