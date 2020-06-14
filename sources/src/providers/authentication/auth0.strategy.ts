@@ -21,19 +21,12 @@ export class Auth0Strategy implements AuthenticationStrategy {
         return new Promise<UserProfile>((resolve, reject) =>
             jwt.verify(
                 token,
-                (header, callback) => {
-                    console.log(header);
-                    return this.jwksClient.getSigningKey(
+                (header, callback) =>
+                    this.jwksClient.getSigningKey(
                         header.kid || "",
-                        (err, key: any) => {
-                            console.log(key);
-                            return callback(
-                                err,
-                                key.publicKey || key.rsaPublicKey
-                            );
-                        }
-                    );
-                },
+                        (err, key: any) =>
+                            callback(err, key.publicKey || key.rsaPublicKey)
+                    ),
                 {
                     issuer: process.env.AUTH0_ISSUER,
                     audience: process.env.AUTH0_AUDIENCE,
