@@ -1,0 +1,17 @@
+kind: ExternalService
+name: estate-server
+spec:
+    image: estate-server
+    image_pull_policy: Always
+    replicas: 1
+    port: 8000
+    allow_http: true
+    env:
+        - name: MONGODB_URL
+          value: $MONGODB_URL
+        - name: AUTH0_URI
+          value: $AUTH0_URI
+        - name: AUTH0_ISSUER
+          value: $AUTH0_ISSUER
+        - name: AUTH0_AUDIENCE
+          value: $AUTH0_AUDIENCE
